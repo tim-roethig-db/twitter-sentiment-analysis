@@ -41,7 +41,8 @@ def delete_numbers(words):
 
 def removeElements(lst, k):
     counted = Counter(lst)
-    return [el for el in lst if counted[el] >= k]
+    words = sorted(counted, key=counted.get)
+    return (words)[max(0, len(words)-k):]
 
 
 def retrieveFeatures(df, word_frequency):
@@ -72,7 +73,7 @@ def retrieveFeatures(df, word_frequency):
     tweets = [w for w in tweets if w not in stopwords.words('english') and len(w) > 1]
     print(len(tweets))
     print(tweets[:100])
-    '''
+
     print('---stemm words---')
     stemmer = PorterStemmer()
     tweets = [stemmer.stem(w) for w in tweets]
@@ -84,21 +85,16 @@ def retrieveFeatures(df, word_frequency):
     tweets = [lemmatizer.lemmatize(w) for w in tweets]
     print(len(tweets))
     print(tweets[:100])
-
+    '''
     print('---remove Stopwords and short words 2---')
     tweets = [w for w in tweets if w not in stopwords.words('english') and len(w) > 1]
     print(len(tweets))
     print(tweets[:100])
 
     print('---remove infrequent words')
-    tweets = removeElements(tweets, word_frequency)
-    print(len(tweets))
-    print(tweets[:100])
-
-    print('---features---')
-    features = list(set(tweets))
+    features = removeElements(tweets, word_frequency)
     print(len(features))
-    print(features)
+    print(features[:100])
 
     return features
 
@@ -120,7 +116,7 @@ def retrieveWordsFromTweet(tweet):
 
     # remove Stopwords and short words 1
     tweet = [w for w in tweet if w not in stopwords.words('english') and len(w) > 1]
-    '''
+
     # stemm words
     stemmer = PorterStemmer()
     tweet = [stemmer.stem(w) for w in tweet]
@@ -128,7 +124,7 @@ def retrieveWordsFromTweet(tweet):
     # lemmatize words
     lemmatizer = WordNetLemmatizer()
     tweet = [lemmatizer.lemmatize(w) for w in tweet]
-
+    '''
     # remove Stopwords and short words 2
     tweet = [w for w in tweet if w not in stopwords.words('english') and len(w) > 1]
 
@@ -166,7 +162,7 @@ def prepareData(word_frequency):
 
     print(df)
     df = df.sample(frac=1).reset_index(drop=True)
-    #df = df.iloc[:10000]
+    #df = df.iloc[:500]
 
     features = retrieveFeatures(df, word_frequency)
 
@@ -182,4 +178,4 @@ def prepareData(word_frequency):
 
     return train_X, train_Y, test_X, test_Y
 
-#prepareData()
+#prepareData(200)
