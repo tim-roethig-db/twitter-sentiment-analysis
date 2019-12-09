@@ -161,7 +161,7 @@ def prepareData(word_frequency):
     df = df.drop(df[(df['tweet_content'] == 'Not Available')].index)
     df = df.drop(df[(df['sentiment'] == 'neutral')].index)
     df.loc[(df.sentiment == 'positive'), 'sentiment'] = 1
-    #df.loc[(df.sentiment == 'neutral'), 'sentiment'] = 0
+    df.loc[(df.sentiment == 'neutral'), 'sentiment'] = 0
     df.loc[(df.sentiment == 'negative'), 'sentiment'] = -1
 
     print(df)

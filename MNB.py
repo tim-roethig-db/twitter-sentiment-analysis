@@ -1,12 +1,12 @@
-from sklearn.svm import SVC
+from sklearn.naive_bayes import MultinomialNB
 from prepare_data import prepareData
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection import GridSearchCV
 
-def svm():
-    train_X, train_Y, test_X, test_Y = prepareData(word_frequency=30)
 
-    clf = SVC(C=1, kernel='linear')
+def mnb():
+    train_X, train_Y, test_X, test_Y = prepareData(word_frequency=20)
+
+    clf = MultinomialNB()
     clf.fit(train_X, train_Y)
 
     pred = clf.predict(test_X)
@@ -17,7 +17,8 @@ def svm():
     for i in range(100):
         print(test_Y[i], list(pred)[i])
 
+
 def grid_search():
-    svm()
+    mnb()
 
 grid_search()
