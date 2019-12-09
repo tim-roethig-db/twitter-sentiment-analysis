@@ -44,7 +44,7 @@ def removeElements(lst, k):
     return [el for el in lst if counted[el] >= k]
 
 
-def retrieveFeatures(df):
+def retrieveFeatures(df, word_frequency):
     tweets = df['tweet_content'].tolist()
     tweets = ', '.join(tweets)
     # strip html
@@ -91,7 +91,7 @@ def retrieveFeatures(df):
     print(tweets[:100])
 
     print('---remove infrequent words')
-    tweets = removeElements(tweets, 25)
+    tweets = removeElements(tweets, word_frequency)
     print(len(tweets))
     print(tweets[:100])
 
@@ -148,7 +148,7 @@ def createDataset(df, features):
     return df
 
 
-def prepareData():
+def prepareData(word_frequency):
     '''
     df = pd.read_csv('train1600000.csv', delimiter=',', encoding = "ISO-8859-1", names=['sentiment', 'id', 'date', 'flag', 'user', 'tweet_content'])
     df = df.drop(columns=['id', 'date', 'flag', 'user'])
@@ -168,7 +168,7 @@ def prepareData():
     df = df.sample(frac=1).reset_index(drop=True)
     #df = df.iloc[:10000]
 
-    features = retrieveFeatures(df)
+    features = retrieveFeatures(df, word_frequency)
 
     df = createDataset(df, features)
     print(df)
