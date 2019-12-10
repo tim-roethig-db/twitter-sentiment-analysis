@@ -48,8 +48,12 @@ def removeElements(lst, k):
 def retrieveFeatures(df, word_frequency):
     tweets = df['tweet_content'].tolist()
     tweets = ', '.join(tweets)
+
+
+    print(tweets)
     # strip html
     tweets = strip_html(tweets)
+    print(tweets)
 
     print('---Tokenize---')
     tweets = word_tokenize(tweets)
@@ -178,4 +182,4 @@ def prepareData(word_frequency):
 
     return train_X, train_Y, test_X, test_Y
 
-#prepareData(200)
+prepareData(1250)
