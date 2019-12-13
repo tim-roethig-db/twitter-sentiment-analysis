@@ -4,7 +4,7 @@ from sklearn.metrics import accuracy_score
 
 
 def mnb():
-    train_X, train_Y, test_X, test_Y = prepareData(word_frequency=20)
+    train_X, train_Y, test_X, test_Y = prepareData(word_frequency=1000)
 
     clf = MultinomialNB()
     clf.fit(train_X, train_Y)

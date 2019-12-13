@@ -7,11 +7,7 @@ from nltk.stem import PorterStemmer, WordNetLemmatizer
 from collections import Counter
 from sklearn.model_selection import train_test_split
 from bs4 import BeautifulSoup
-
-
-def strip_html(text):
-    soup = BeautifulSoup(text, "html.parser")
-    return soup.get_text()
+from textblob import TextBlob
 
 def to_lowercase(words):
     """Convert all characters to lowercase from list of tokenized words"""
@@ -39,6 +35,13 @@ def delete_numbers(words):
             new_words.append(word)
     return new_words
 
+def spellcorection(words):
+    new_words = []
+    for word in words:
+        corrected_word = TextBlob(word).correct()
+        new_words.append(corrected_word)
+    return new_words
+
 def removeElements(lst, k):
     counted = Counter(lst)
     words = sorted(counted, key=counted.get)
@@ -47,12 +50,8 @@ def removeElements(lst, k):
 
 def retrieveFeatures(df, word_frequency):
     tweets = df['tweet_content'].tolist()
-    tweets = ', '.join(tweets)
-
-
     print(tweets)
-    # strip html
-    tweets = strip_html(tweets)
+    tweets = str(tweets).strip('[]')
     print(tweets)
 
     print('---Tokenize---')
@@ -69,7 +68,7 @@ def retrieveFeatures(df, word_frequency):
     print(tweets[:100])
 
     print('---remove numbers---')
-    tweets = delete_numbers(tweets)
+    tweets = [w for w in tweets if not any(c.isdigit() for c in w)]
     print(len(tweets))
     print(tweets[:100])
 
@@ -103,9 +102,6 @@ def retrieveFeatures(df, word_frequency):
     return features
 
 def retrieveWordsFromTweet(tweet):
-    # strip html
-    tweet = strip_html(tweet)
-
     # Tokenize
     tweet = word_tokenize(tweet)
 
@@ -182,4 +178,4 @@ def prepareData(word_frequency):
 
     return train_X, train_Y, test_X, test_Y
 
-prepareData(1250)
+#prepareData(1250)
