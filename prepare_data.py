@@ -26,15 +26,6 @@ def remove_punctuation(words):
             new_words.append(new_word)
     return new_words
 
-def delete_numbers(words):
-    """Replace all interger occurrences in list of tokenized words with textual representation"""
-    p = inflect.engine()
-    new_words = []
-    for word in words:
-        if not word.isdigit():
-            new_words.append(word)
-    return new_words
-
 def spellcorection(words):
     new_words = []
     for word in words:
@@ -42,10 +33,9 @@ def spellcorection(words):
         new_words.append(corrected_word)
     return new_words
 
-def removeElements(lst, k):
-    counted = Counter(lst)
-    words = sorted(counted, key=counted.get)
-    return (words)[max(0, len(words)-k):]
+def removeElements(text, k):
+    text = [w for w in text if text.count(w) > k]
+    return text
 
 
 def retrieveFeatures(df, word_frequency):
@@ -94,7 +84,7 @@ def retrieveFeatures(df, word_frequency):
     print(len(tweets))
     print(tweets[:100])
 
-    print('---remove infrequent words')
+    print('---remove infrequent words---')
     features = removeElements(tweets, word_frequency)
     print(len(features))
     print(features[:100])
@@ -111,9 +101,6 @@ def retrieveWordsFromTweet(tweet):
     # remove punctaition
     tweet = remove_punctuation(tweet)
 
-    # delete numbers
-    tweet = delete_numbers(tweet)
-
     # remove Stopwords and short words 1
     tweet = [w for w in tweet if w not in stopwords.words('english') and len(w) > 1]
 
@@ -125,8 +112,6 @@ def retrieveWordsFromTweet(tweet):
     lemmatizer = WordNetLemmatizer()
     tweet = [lemmatizer.lemmatize(w) for w in tweet]
     '''
-    # remove Stopwords and short words 2
-    tweet = [w for w in tweet if w not in stopwords.words('english') and len(w) > 1]
 
     return tweet
 

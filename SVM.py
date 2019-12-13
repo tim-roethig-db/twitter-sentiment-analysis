@@ -21,7 +21,7 @@ def svm(word_frequency, C, kernel, poly_degree):
     return acc
 
 def grid_search_word_frequency():
-    word_frequencys = [250, 500, 750, 1000, 1250, 1500]
+    word_frequencys = [2, 4, 5, 6, 8, 10]
     score = []
     for word_frequency in word_frequencys:
         accuracys = []
@@ -55,4 +55,4 @@ def grid_search_hyperparameters():
 
 #grid_search_word_frequency()
 
-print(svm(word_frequency=1000, C=3, kernel='rbf', poly_degree=3))
+print(svm(word_frequency=5, C=3, kernel='rbf', poly_degree=3))
