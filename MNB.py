@@ -4,18 +4,19 @@ from sklearn.metrics import accuracy_score
 
 
 def mnb():
-    train_X, train_Y, test_X, test_Y = prepareData(word_frequency=1000)
+    train_X, train_Y, test_X, test_Y = prepareData(word_frequency=5)
 
     clf = MultinomialNB()
     clf.fit(train_X, train_Y)
 
-    pred = clf.predict(test_X)
+    train_pred = clf.predict(train_X)
+    test_pred = clf.predict(test_X)
 
-    acc = accuracy_score(test_Y, pred)
-    print(acc)
+    train_acc = accuracy_score(train_Y, train_pred)
+    test_acc = accuracy_score(test_Y, test_pred)
 
-    for i in range(100):
-        print(test_Y[i], list(pred)[i])
+    print('Train Acc: ', train_acc)
+    print('Test Acc: ', test_acc)
 
 
 def grid_search():

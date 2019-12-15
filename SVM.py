@@ -11,17 +11,17 @@ def svm(word_frequency, C, kernel, poly_degree):
 
     clf.fit(train_X, train_Y)
 
-    pred = clf.predict(test_X)
+    train_pred = clf.predict(train_X)
+    test_pred = clf.predict(test_X)
 
-    acc = accuracy_score(test_Y, pred)
-    '''
-    for i in range(100):
-        print(test_Y[i], list(pred)[i])
-    '''
-    return acc
+    train_acc = accuracy_score(train_Y, train_pred)
+    test_acc = accuracy_score(test_Y, test_pred)
+
+    print('Train Acc: ', train_acc)
+    print('Test Acc: ', test_acc)
 
 def grid_search_word_frequency():
-    word_frequencys = [2, 4, 5, 6, 8, 10]
+    word_frequencys = [3, 5, 7, 10]
     score = []
     for word_frequency in word_frequencys:
         accuracys = []
@@ -55,4 +55,4 @@ def grid_search_hyperparameters():
 
 #grid_search_word_frequency()
 
-print(svm(word_frequency=5, C=3, kernel='rbf', poly_degree=3))
+svm(word_frequency=5, C=3, kernel='rbf', poly_degree=3)

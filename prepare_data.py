@@ -9,6 +9,13 @@ from sklearn.model_selection import train_test_split
 from bs4 import BeautifulSoup
 from textblob import TextBlob
 
+def remove_link(tweets):
+    new_tweets = []
+    for tweet in tweets:
+        new_tweet = re.sub(r"http\S+", "", tweet)
+        new_tweets.append(new_tweet)
+    return new_tweets
+
 def to_lowercase(words):
     """Convert all characters to lowercase from list of tokenized words"""
     new_words = []
@@ -41,6 +48,10 @@ def removeElements(text, k):
 def retrieveFeatures(df, word_frequency):
     tweets = df['tweet_content'].tolist()
     print(tweets)
+
+    print('---remove link---')
+    tweets = remove_link(tweets)
+
     tweets = str(tweets).strip('[]')
     print(tweets)
 
@@ -52,7 +63,7 @@ def retrieveFeatures(df, word_frequency):
     # to lowercase
     tweets = to_lowercase(tweets)
 
-    print('---remove punctaition---')
+    print('---remove punctuation---')
     tweets = remove_punctuation(tweets)
     print(len(tweets))
     print(tweets[:100])
@@ -85,9 +96,14 @@ def retrieveFeatures(df, word_frequency):
     print(tweets[:100])
 
     print('---remove infrequent words---')
-    features = removeElements(tweets, word_frequency)
+    tweets = removeElements(tweets, word_frequency)
+    print(len(tweets))
+    print(tweets[:100])
+
+    print('---create features---')
+    features = list(set(tweets))
     print(len(features))
-    print(features[:100])
+    print(features)
 
     return features
 
