@@ -55,4 +55,4 @@ def grid_search_hyperparameters():
 
 #grid_search_word_frequency()
 
-svm(word_frequency=5, C=3, kernel='rbf', poly_degree=3)
+svm(word_frequency=5, C=1, kernel='rbf', poly_degree=3)
